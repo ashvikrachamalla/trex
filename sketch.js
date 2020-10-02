@@ -26,24 +26,24 @@ function preload(){
 }
   
 function setup() {
-  createCanvas(600, 200);
+  createCanvas(600, 400);
   
   trex = createSprite (50, 170, 20, 50);
   trex.addAnimation("running", runningtrex);
   trex.addAnimation("collided", deadtrex);
   trex.scale = 0.5;
-  
-  ground = createSprite (200, 180, 600, 20);
+  camera.position.x = trex.x
+  ground = createSprite (0, 180, 600, 20);
   ground.addImage (groundimage);
-  ground.x = ground.width/2;
+  ground.x = ground.width/2-200;
   ground.velocityX = -(6+3*score/100);
   invisibleground = createSprite (200, 190, 600, 10);
   invisibleground.visible = false;
   CloudsGroup = new Group();
   ObstaclesGroup = new Group ();
   //place gameOver and restart icon on the screen
- gameOver = createSprite(300,100);
- restart = createSprite(300,140);
+ gameOver = createSprite(100,100);
+ restart = createSprite(100,140);
 gameOver.addImage(goimage)
 gameOver.scale = 0.5;
 restart.addImage(restartimage);
@@ -61,7 +61,7 @@ textFont("Georgia");
 
 function draw() {
   background(255);
-  text("score : " + score, 500, 50);
+  text("score : " + score, 150, 50);
   if(gameState == PLAY){
     score = score + Math.round(getFrameRate()/60);
     if (score > 0 && score % 100 == 0){
@@ -73,8 +73,8 @@ function draw() {
       jump.play ()
     }
     trex.velocityY += 0.8;
-    if(ground.x<0){
-      ground.x = ground.width/2;
+    if(ground.x<-300){
+      ground.x = ground.width/2-200;
     }
     trex.collide (invisibleground);
     spawnclouds();
